@@ -6,9 +6,9 @@ class NewsletterEditor {
         this.bindEvents();
         this.setupDragAndDrop();
         this.setupAutoSave();
+        this.loadFromLocalStorage(); // Carrega os dados guardados no início
         this.updatePreview();
         this.updateStats();
-        this.setCurrentDate();
     }
 
     init() {
@@ -702,7 +702,7 @@ class NewsletterEditor {
         input.click();
     }
 
-    // Auto-save
+    // Auto-save to Local Storage
     autoSave() {
         const newsletterData = {
             title: this.titleInput.value,
@@ -715,9 +715,41 @@ class NewsletterEditor {
             timestamp: new Date().toISOString()
         };
         
-        // Note: LocalStorage is not used as per instructions
-        console.log('Newsletter auto-saved:', newsletterData);
+        localStorage.setItem('newsletterData', JSON.stringify(newsletterData));
+        console.log('Newsletter auto-saved to Local Storage:', newsletterData);
     }
+
+    // Load from Local Storage
+    loadFromLocalStorage() {
+        const savedData = localStorage.getItem('newsletterData');
+        if (savedData) {
+            try {
+                const newsletterData = JSON.parse(savedData);
+                
+                this.titleInput.value = newsletterData.title || '';
+                this.dateInput.value = newsletterData.date || '';
+                this.authorInput.value = newsletterData.author || '';
+                this.subjectInput.value = newsletterData.subject || '';
+                this.categorySelect.value = newsletterData.category || '';
+                
+                if (newsletterData.content && newsletterData.content.trim() !== '' && !newsletterData.content.includes('drop-zone')) {
+                    this.editorContent.innerHTML = newsletterData.content;
+                }
+                
+                this.currentTemplate = newsletterData.template || 'minimal';
+                
+                this.showToast('Sessão anterior restaurada!', 'success');
+                console.log('Newsletter data loaded from LocalStorage.');
+
+            } catch (error) {
+                console.error('Error loading data from LocalStorage:', error);
+                this.setCurrentDate(); // Set date only if loading fails
+            }
+        } else {
+            this.setCurrentDate(); // Set date if no saved data
+        }
+    }
+
 
     // Utility Methods
     clearFormatting() {
