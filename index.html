@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsletterPT - Editor Moderno de Newsletters</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>Newsletter<span class="accent">PT</span></h1>
+            </div>
+            <nav class="header-nav">
+                <button class="btn btn--outline btn--sm" id="templateBtn">Templates</button>
+                <button class="btn btn--outline btn--sm" id="previewBtn">Pré-visualizar</button>
+                <button class="btn btn--primary btn--sm" id="publishBtn">Publicar</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main App Layout -->
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Blocos de Conteúdo</h3>
+                <div class="content-blocks">
+                    <div class="block-item" draggable="true" data-type="heading">
+                        <div class="block-icon">H</div>
+                        <span>Título</span>
+                    </div>
+                    <div class="block-item" draggable="true" data-type="paragraph">
+                        <div class="block-icon">¶</div>
+                        <span>Parágrafo</span>
+                    </div>
+                    <div class="block-item" draggable="true" data-type="image">
+                        <div class="block-icon">📷</div>
+                        <span>Imagem</span>
+                    </div>
+                    <div class="block-item" draggable="true" data-type="quote">
+                        <div class="block-icon">"</div>
+                        <span>Citação</span>
+                    </div>
+                    <div class="block-item" draggable="true" data-type="list">
+                        <div class="block-icon">•</div>
+                        <span>Lista</span>
+                    </div>
+                    <div class="block-item" draggable="true" data-type="separator">
+                        <div class="block-icon">—</div>
+                        <span>Separador</span>
+                    </div>
+                    <div class="block-item" draggable="true" data-type="button">
+                        <div class="block-icon">⏵</div>
+                        <span>Botão CTA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Metadados</h3>
+                <div class="form-group">
+                    <label class="form-label" for="newsletterTitle">Título da Newsletter</label>
+                    <input type="text" id="newsletterTitle" class="form-control" placeholder="Digite o título...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="publishDate">Data de Publicação</label>
+                    <input type="date" id="publishDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="author">Autor</label>
+                    <input type="text" id="author" class="form-control" placeholder="Nome do autor...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="subject">Assunto do Email</label>
+                    <input type="text" id="subject" class="form-control" placeholder="Assunto...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="category">Categoria</label>
+                    <select id="category" class="form-control">
+                        <option value="">Seleccionar categoria</option>
+                        <option value="geral">Geral</option>
+                        <option value="negocios">Negócios</option>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="cultura">Cultura</option>
+                        <option value="lifestyle">Lifestyle</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Estatísticas</h3>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Palavras:</span>
+                        <span class="stat-value" id="wordCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tempo de leitura:</span>
+                        <span class="stat-value" id="readTime">0 min</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Legibilidade:</span>
+                        <span class="stat-value" id="readability">Boa</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Editor Area -->
+        <main class="editor-area">
+            <div class="editor-toolbar">
+                <button class="toolbar-btn" data-action="bold" title="Negrito (Ctrl+B)">
+                    <strong>B</strong>
+                </button>
+                <button class="toolbar-btn" data-action="italic" title="Itálico (Ctrl+I)">
+                    <em>I</em>
+                </button>
+                <button class="toolbar-btn" data-action="underline" title="Sublinhado (Ctrl+U)">
+                    <u>U</u>
+                </button>
+                <div class="toolbar-separator"></div>
+                <button class="toolbar-btn" data-action="undo" title="Desfazer (Ctrl+Z)">↶</button>
+                <button class="toolbar-btn" data-action="redo" title="Refazer (Ctrl+Y)">↷</button>
+                <div class="toolbar-separator"></div>
+                <button class="toolbar-btn" data-action="paste" title="Colar e Formatar (Ctrl+V)">📋</button>
+                <button class="toolbar-btn" data-action="clear" title="Limpar Formatação">🗑</button>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-content" id="editorContent" contenteditable="true">
+                    <div class="drop-zone">
+                        <div class="drop-zone-content">
+                            <h2>Comece a criar a sua newsletter</h2>
+                            <p>Arraste blocos da barra lateral ou cole o seu conteúdo aqui para começar.</p>
+                            <p class="helper-text">💡 Dica: Use Ctrl+V para colar texto com formatação automática</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Preview Panel -->
+        <aside class="preview-panel" id="previewPanel">
+            <div class="preview-header">
+                <h3>Pré-visualização</h3>
+                <div class="preview-controls">
+                    <button class="preview-device" data-device="desktop" title="Desktop">💻</button>
+                    <button class="preview-device" data-device="tablet" title="Tablet">📱</button>
+                    <button class="preview-device active" data-device="mobile" title="Mobile">📱</button>
+                </div>
+            </div>
+            <div class="preview-content" id="previewContent">
+                <div class="newsletter-preview">
+                    <div class="newsletter-header">
+                        <h1 id="previewTitle">Título da Newsletter</h1>
+                        <p class="newsletter-meta">
+                            <span id="previewDate">Hoje</span> • 
+                            <span id="previewAuthor">Autor</span>
+                        </p>
+                    </div>
+                    <div class="newsletter-body" id="previewBody">
+                        <p class="preview-placeholder">O conteúdo aparecerá aqui conforme edita...</p>
+                    </div>
+                    <div class="newsletter-footer">
+                        <p class="footer-text">NewsletterPT • Criado com elegância portuguesa</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="templateModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Escolher Template</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="template-grid">
+                    <div class="template-item" data-template="minimal">
+                        <div class="template-preview">
+                            <div class="template-header"></div>
+                            <div class="template-lines"></div>
+                        </div>
+                        <h4>Minimalista</h4>
+                        <p>Design limpo e focado no conteúdo</p>
+                    </div>
+                    <div class="template-item" data-template="azulejo">
+                        <div class="template-preview azulejo-style">
+                            <div class="template-pattern"></div>
+                            <div class="template-lines"></div>
+                        </div>
+                        <h4>Azulejo</h4>
+                        <p>Inspirado nos azulejos portugueses</p>
+                    </div>
+                    <div class="template-item" data-template="modern">
+                        <div class="template-preview modern-style">
+                            <div class="template-header-bold"></div>
+                            <div class="template-lines"></div>
+                        </div>
+                        <h4>Moderno</h4>
+                        <p>Design contemporâneo e arrojado</p>
+                    </div>
+                    <div class="template-item" data-template="classic">
+                        <div class="template-preview classic-style">
+                            <div class="template-header-classic"></div>
+                            <div class="template-lines"></div>
+                        </div>
+                        <h4>Clássico</h4>
+                        <p>Elegância atemporal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="publishModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Publicar Newsletter</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="publish-options">
+                    <div class="publish-option">
+                        <h4>📧 Exportar para Email</h4>
+                        <p>Gera código HTML optimizado para clientes de email</p>
+                        <button class="btn btn--primary">Exportar HTML</button>
+                    </div>
+                    <div class="publish-option">
+                        <h4>🌐 Versão Web</h4>
+                        <p>Cria uma página web para partilhar online</p>
+                        <button class="btn btn--primary">Gerar Link</button>
+                    </div>
+                    <div class="publish-option">
+                        <h4>📄 Guardar PDF</h4>
+                        <p>Salva a newsletter como documento PDF</p>
+                        <button class="btn btn--primary">Descarregar PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
