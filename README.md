@@ -61,7 +61,8 @@ O editor oferece uma vasta gama de funcionalidades para criar newsletters profis
     *   `Ctrl/Cmd + U`: Sublinhado
     *   `Ctrl/Cmd + Z`: Desfazer
     *   `Ctrl/Cmd + Y`: Refazer
-    *   `Ctrl/Cmd + S`: Guardar (simulado, mostra notificação)
+    *   `Ctrl/Cmd + S`: Guardar (aciona o salvamento automático no localStorage)
+*   **Salvamento Automático no Navegador (`localStorage`)**: O seu trabalho é guardado automaticamente no navegador a cada 30 segundos e ao fechar a janela, permitindo que continue a editar mais tarde mesmo que feche o navegador acidentalmente.
 
 ## Como Usar
 
@@ -97,7 +98,9 @@ O editor oferece uma vasta gama de funcionalidades para criar newsletters profis
 ## Possíveis Melhorias Futuras
 
 *   **Implementação Completa da Funcionalidade "Guardar PDF"**.
-*   **Salvamento Persistente**: Implementar salvamento real no `localStorage` ou integração com backend/serviços de nuvem.
+*   **Opções de Limpeza do `localStorage`**: Adicionar um botão para o utilizador limpar os dados guardados no navegador, se desejar.
+*   **Melhorias na Gestão de Histórico com `localStorage`**: Assegurar que o histórico de desfazer/refazer interage de forma ideal com os dados carregados.
+*   **Integração com Backend/Serviços de Nuvem**: Para um salvamento persistente mais robusto e partilhável entre dispositivos.
 *   **Mais Opções de Templates e Blocos de Conteúdo**.
 *   **Personalização Avançada de Estilos**: Permitir que os utilizadores personalizem cores, fontes, etc.
 *   **Integração com Serviços de Email Marketing**.

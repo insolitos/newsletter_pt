@@ -99,8 +99,9 @@ class NewsletterEditor {
         };
         
         // Initialize with first history entry
-        this.editorHistory.push(this.editorContent.innerHTML);
-        this.historyIndex = 0;
+        // this.editorHistory.push(this.editorContent.innerHTML); // Moved to loadFromLocalStorage or after template load
+        // this.historyIndex = 0; // Moved
+        this.loadFromLocalStorage(); // Load data from localStorage on init
     }
 
     bindEvents() {
@@ -716,7 +717,33 @@ class NewsletterEditor {
         };
         
         // Note: LocalStorage is not used as per instructions
-        console.log('Newsletter auto-saved:', newsletterData);
+        // console.log('Newsletter auto-saved:', newsletterData);
+        localStorage.setItem('newsletterData', JSON.stringify(newsletterData));
+        console.log('Newsletter auto-saved to localStorage:', newsletterData);
+    }
+
+    loadFromLocalStorage() {
+        const savedData = localStorage.getItem('newsletterData');
+        if (savedData) {
+            try {
+                const newsletterData = JSON.parse(savedData);
+                this.titleInput.value = newsletterData.title || '';
+                this.dateInput.value = newsletterData.date || new Date().toISOString().split('T')[0];
+                this.authorInput.value = newsletterData.author || '';
+                this.subjectInput.value = newsletterData.subject || '';
+                this.categorySelect.value = newsletterData.category || '';
+                this.editorContent.innerHTML = newsletterData.content || '<div class="drop-zone"><div class="drop-zone-content"><h2>Comece a criar a sua newsletter</h2><p>Arraste blocos da barra lateral ou cole o seu conteúdo aqui para começar.</p><p class="helper-text">💡 Dica: Use Ctrl+V para colar texto com formatação automática</p></div></div>';
+                this.currentTemplate = newsletterData.template || 'minimal';
+
+                this.updatePreview();
+                this.updateStats();
+                this.saveToHistory(); // Save loaded content as initial history state
+                this.showToast('Conteúdo carregado do localStorage!', 'info');
+            } catch (error) {
+                console.error('Error loading data from localStorage:', error);
+                localStorage.removeItem('newsletterData'); // Clear corrupted data
+            }
+        }
     }
 
     // Utility Methods
